@@ -66,6 +66,7 @@ export default class Bubu extends Phaser.Physics.Arcade.Sprite {
             // 3. Wait for the fade to complete before switching
             this.scene.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
                 this.scene.scene.start(currentExit.target, {
+                    mapID: currentExit.mapID,
                     x: currentExit.spawnX,
                     y: currentExit.spawnY
                 });

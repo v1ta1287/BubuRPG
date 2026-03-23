@@ -1,5 +1,6 @@
-import Bubu from "../sprites/bubu.js";
+import Bubu from "../sprites/Bubu.js";
 import { GameState } from "../GameState.js";
+import { ForestMaps } from "../maps.js";
 import BaseScene from "./BaseScene.js";
 
 export default class ForestScene extends BaseScene {
@@ -8,63 +9,81 @@ export default class ForestScene extends BaseScene {
     }
 
     init(data) {
+        this.mapID = data.mapID;
+        const mapData = ForestMaps[this.mapID];
+        this.mapLayout = mapData.layout
+        this.exits = mapData.exits
         this.startPos = {
             x: data.x || 64 * 2 + 32,
             y: data.y || 64 * 2 + 32
         };
     }
 
-    preload() {
-        this.load.spritesheet('player', 'assets/lilbubu.png', { frameWidth: 212, frameHeight: 315 });
-        this.load.spritesheet('forest', 'assets/forest.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('forest2', 'assets/forest2.png', { frameWidth: 64, frameHeight: 64 });
-    }
-
     create() {
         super.create();
 
         this.walls = [];
-        this.exits = [];
         this.flowerObjects = [];
-
-        const mapLayout = [
-            [0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 2, 0, 1, 0, 5, 0, 0],
-            [0, 0, 0, 0, 1, 0, 5, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 3, 0, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 6, 0, 4, 0, 0],
-        ];
 
         const flowerIndices = [2, 3, 4];
         const treeIndex = 5;
-        const exitIndex = 6;
         const pathIndex = 1;
 
-        mapLayout.forEach((row, y) => {
+        const exitIndices = [20, 21, 22, 23, 31, 32, 33, 34]
+        this.mapLayout.forEach((row, y) => {
             row.forEach((value, x) => {
                 const posX = x * 64;
                 const posY = y * 64;
                 const tileIndex = Math.abs(value);
 
-                // --- 1. LAYER ONE: BASE PATHS & EXITS ---
-                if (tileIndex === pathIndex || tileIndex === exitIndex) {
+                if (tileIndex === pathIndex) {
                     this.add.image(posX, posY, 'forest', tileIndex).setOrigin(0);
-
-                    if (tileIndex === exitIndex) {
-                        this.exits.push({
-                            x: posX + 32, y: posY + 32,
-                            target: 'HomeScene', direction: 'down',
-                            spawnX: 64 * 4 + 32, spawnY: 64 * 0 + 32
-                        });
+                }
+                else if (exitIndices.includes(tileIndex)) {
+                    let tile;
+                    const cropBottom = new Phaser.Geom.Rectangle(0, 0, 64, 32);
+                    const cropTop = new Phaser.Geom.Rectangle(0, 32, 64, 32);
+                    const cropLeft = new Phaser.Geom.Rectangle(32, 0, 32, 64);
+                    const cropRight = new Phaser.Geom.Rectangle(0, 0, 32, 64);
+                    switch (tileIndex) {
+                        case 21:
+                            tile = this.add.image(posX, posY, 'forest', 1).setOrigin(0);
+                            tile.setCrop(cropBottom);
+                            break;
+                        case 22:
+                            tile = this.add.image(posX, posY, 'forest', 1).setOrigin(0);
+                            tile.setCrop(cropTop);
+                            break;
+                        case 23:
+                            tile = this.add.image(posX, posY, 'forest', 1).setOrigin(0);
+                            tile.setCrop(cropLeft);
+                            break;
+                        case 24:
+                            tile = this.add.image(posX, posY, 'forest', 1).setOrigin(0);
+                            tile.setCrop(cropRight);
+                            break;
+                        case 31:
+                            tile = this.add.image(posX, posY, 'forest', 0).setOrigin(0);
+                            tile.setCrop(cropBottom);
+                            break;
+                        case 32:
+                            tile = this.add.image(posX, posY, 'forest', 0).setOrigin(0);
+                            tile.setCrop(cropTop);
+                            break;
+                        case 33:
+                            tile = this.add.image(posX, posY, 'forest', 0).setOrigin(0);
+                            tile.setCrop(cropLeft);
+                            break;
+                        case 34:
+                            tile = this.add.image(posX, posY, 'forest', 0).setOrigin(0);
+                            tile.setCrop(cropRight);
+                            break;
                     }
                 }
                 // --- 2. LAYER TWO: GRASS BASE FOR EVERYTHING ELSE ---
                 else {
                     // Draw grass first so when flowers are picked, grass is underneath
                     this.add.image(posX, posY, 'forest', 0).setOrigin(0);
-
                     // --- 3. LAYER THREE: TOP OBJECTS ---
                     if (flowerIndices.includes(tileIndex)) {
                         const flowerId = `flower_${x}_${y}`;

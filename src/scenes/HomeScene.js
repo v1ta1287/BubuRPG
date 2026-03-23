@@ -1,4 +1,4 @@
-import Bubu from "../sprites/bubu.js";
+import Bubu from "../sprites/Bubu.js";
 import Dudu from "../sprites/Dudu.js";
 import { GameState } from "../GameState.js";
 import BaseScene from "./BaseScene.js";
@@ -14,15 +14,6 @@ export default class HomeScene extends BaseScene {
             x: data.x || 64 * 4 + 32,
             y: data.y || 64 * 4 + 32
         };
-    }
-
-
-    preload() {
-        // NPCs
-        this.load.spritesheet('player', 'assets/lilbubu.png', { frameWidth: 212, frameHeight: 315 });
-        this.load.spritesheet('dudu', 'assets/lildudu.png', { frameWidth: 212, frameHeight: 315 })
-        // Tilesets
-        this.load.spritesheet('house', 'assets/house.png', { frameWidth: 64, frameHeight: 64 });
     }
 
     create() {
@@ -74,6 +65,7 @@ export default class HomeScene extends BaseScene {
                 if (exitTiles.includes(tileIndex)) {
                     this.exits.push({
                         x: posX + 32, y: posY + 32,
+                        mapID: 'forest_1',
                         target: 'ForestScene', direction: 'up',
                         spawnX: 64 * 4 + 32, spawnY: 64 * 6 + 32
                     });
