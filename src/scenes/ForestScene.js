@@ -1,6 +1,6 @@
 import Bubu from "../sprites/Bubu.js";
 import { GameState } from "../GameState.js";
-import { ForestMaps } from "../maps.js";
+import { ForestMaps } from "../Maps.js";
 import BaseScene from "./BaseScene.js";
 
 export default class ForestScene extends BaseScene {

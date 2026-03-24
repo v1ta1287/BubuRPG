@@ -7,7 +7,7 @@ export const GameState = {
     pickedItems: new Set(),
     questStatus: 'NOT_STARTED',
     triviaStatus: 'NOT_STARTED',
-    triviaSteak: 0,
+    triviaStreak: 0,
     triviaQuestions: [
         { q: "What color is a sunflower?", a: ["Yellow", "Red", "Blue", "Purple"], correct: 0 },
         { q: "Do bees help flowers?", a: ["No", "Yes", "Maybe", "Only on Fridays"], correct: 1 },
