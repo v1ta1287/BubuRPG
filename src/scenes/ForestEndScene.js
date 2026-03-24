@@ -80,7 +80,7 @@ export default class ForestEndScene extends BaseScene {
                             }
                         } else {
                             const fence = this.add.image(posX, posY, 'fences', 6).setOrigin(0);
-                            // this.walls.push({ x: posX + 32, y: posY + 32 });
+                            this.walls.push({ x: posX + 32, y: posY + 32 });
                         }
                     }
                     else if (tileIndex === treeIndex) {
