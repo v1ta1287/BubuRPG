@@ -23,6 +23,7 @@ export default class DialogueScene extends Phaser.Scene {
         this.displayNextLine();
 
         this.input.keyboard.on('keydown-SPACE', () => {
+            this.sound.play('button', { volume: 0.2, detune: Phaser.Math.Between(-100, 100) });
             this.currentLine++;
             if (this.currentLine < this.lines.length) {
                 this.displayNextLine();

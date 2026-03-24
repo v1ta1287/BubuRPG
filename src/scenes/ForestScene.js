@@ -131,6 +131,7 @@ export default class ForestScene extends BaseScene {
                 const bubuDir = this.player.anims.currentAnim ? this.player.anims.currentAnim.key : '';
 
                 if (this.checkIfFacing(this.player, { x: flower.x + 32, y: flower.y + 32 }, bubuDir)) {
+                    this.sound.play('button', { volume: 0.2, detune: Phaser.Math.Between(-100, 100) });
                     this.collectFlower(flower, index);
                 }
             }

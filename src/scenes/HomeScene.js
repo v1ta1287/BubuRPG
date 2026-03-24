@@ -105,6 +105,7 @@ export default class HomeScene extends BaseScene {
         let lines = [];
         let onCompleteAction = null;
 
+        this.sound.play('button', { volume: 0.2, detune: Phaser.Math.Between(-100, 100) });
         if (GameState.questStatus === 'NOT_STARTED') {
             lines = [
                 "Hi Bubu! Happy birthday 🎂",

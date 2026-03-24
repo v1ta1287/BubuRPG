@@ -16,6 +16,8 @@ export default class BootScene extends Phaser.Scene {
 
         // Load audios
         this.load.audio('enter', 'assets/audio/enter.mp3');
+        this.load.audio('button', 'assets/audio/button.mp3');
+        this.load.audio('bgmusic', 'assets/audio/background.mp3');
     }
 
     create() {
@@ -28,7 +30,7 @@ export default class BootScene extends Phaser.Scene {
         });
 
         this.createAnimations();
-        this.scene.start('HomeScene');
+        this.scene.start('MenuScene');
     }
 
     createAnimations() {

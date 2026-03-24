@@ -119,6 +119,7 @@ export default class ForestEndScene extends BaseScene {
         let lines = [];
         let onCompleteAction = null;
 
+        this.sound.play('button', { volume: 0.2, detune: Phaser.Math.Between(-100, 100) });
         if (GameState.triviaStatus === 'NOT_STARTED') {
             lines = [
                 "Hello Bubu! My name is Andy.",
