@@ -4,6 +4,7 @@ import ForestScene from './scenes/ForestScene.js';
 import InventoryScene from './scenes/InventoryScene.js';
 import DialogueScene from './scenes/DialogueScene.js';
 import ForestEndScene from './scenes/ForestEndScene.js';
+import EchidnaScene from './scenes/EchidnaScene.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -18,7 +19,7 @@ const config = {
         default: 'arcade',
         arcade: { debug: false }
     },
-    scene: [BootScene, HomeScene, ForestScene, ForestEndScene, InventoryScene, DialogueScene]
+    scene: [BootScene, HomeScene, ForestScene, ForestEndScene, EchidnaScene, InventoryScene, DialogueScene]
 };
 
 const game = new Phaser.Game(config);

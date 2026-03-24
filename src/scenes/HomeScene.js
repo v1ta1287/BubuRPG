@@ -109,7 +109,7 @@ export default class HomeScene extends BaseScene {
             lines = [
                 "Hi Bubu! Happy birthday 🎂",
                 "I'm trying to decorate for your birthday party, but I'm short on flowers. 🌸",
-                "Could you find 3 Yellow Flowers, 3 Blue Flowers and 3 Pink Flowers for me? 💐",
+                "Could you find 5 Yellow Flowers, 5 Blue Flowers and 5 Pink Flowers for me? 💐",
                 "Once you get the flowers, I'll hand over your birthday present 🎁"
             ];
             onCompleteAction = () => { GameState.questStatus = 'ACTIVE'; };
@@ -119,7 +119,7 @@ export default class HomeScene extends BaseScene {
             const blueCount = GameState.inventory["Blue Flower"] || 0;
             const pinkCount = GameState.inventory["Pink Flower"] || 0;
 
-            if (yellowCount >= 3 && blueCount >= 3 && pinkCount >= 3) {
+            if (yellowCount >= 5 && blueCount >= 5 && pinkCount >= 5) {
                 lines = [
                     "Oh! You found them!",
                     "These are perfect. Thank you so much, Bubu.",
@@ -127,18 +127,18 @@ export default class HomeScene extends BaseScene {
                 ];
                 onCompleteAction = () => {
                     // Remove flowers, add present
-                    GameState.inventory["Yellow Flower"] -= 3;
+                    GameState.inventory["Yellow Flower"] -= 5;
                     if (GameState.inventory["Yellow Flower"] === 0) delete GameState.inventory["Yellow Flower"];
-                    GameState.inventory["Blue Flower"] -= 3;
+                    GameState.inventory["Blue Flower"] -= 5;
                     if (GameState.inventory["Blue Flower"] === 0) delete GameState.inventory["Blue Flower"];
-                    GameState.inventory["Pink Flower"] -= 3;
+                    GameState.inventory["Pink Flower"] -= 5;
                     if (GameState.inventory["Pink Flower"] === 0) delete GameState.inventory["Pink Flower"];
 
                     GameState.inventory["Birthday Present"] = 1;
                     GameState.questStatus = 'COMPLETED';
                 };
             } else {
-                lines = [`I still need 3 Yellow, Blue and Pink Flowers. You currently have ${yellowCount} Yellow, ${blueCount} Blue and ${pinkCount} Pink .`];
+                lines = [`I still need 5 Yellow, Blue and Pink Flowers. You currently have ${yellowCount} Yellow, ${blueCount} Blue and ${pinkCount} Pink .`];
             }
 
         } else {

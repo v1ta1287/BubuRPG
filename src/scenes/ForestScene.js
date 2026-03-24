@@ -89,7 +89,7 @@ export default class ForestScene extends BaseScene {
                         const flowerId = `flower_${x}_${y}`;
 
                         // Only draw flower and add wall if it hasn't been picked
-                        if (!GameState.pickedItems.has(flowerId)) {
+                        if (!GameState.pickedItemsForest.has(flowerId)) {
                             const flower = this.add.image(posX, posY, 'forest2', tileIndex).setOrigin(0);
                             flower.setData('id', flowerId);
                             flower.setData('type', this.getFlowerType(tileIndex));
@@ -142,7 +142,7 @@ export default class ForestScene extends BaseScene {
         const id = flower.getData('id');
 
         GameState.inventory[type] = (GameState.inventory[type] || 0) + 1;
-        GameState.pickedItems.add(id);
+        GameState.pickedItemsForest.add(id);
 
         // Remove from walls so Bubu can walk here now
         this.walls = this.walls.filter(w => w.x !== flower.x + 32 || w.y !== flower.y + 32);

@@ -61,8 +61,7 @@ export default class ForestEndScene extends BaseScene {
                     tile.setCrop(cropTop);
                     this.exits.push({
                         x: posX + 32, y: posY + 32,
-                        mapID: 'forest_1',
-                        target: 'ForestScene', direction: 'up',
+                        target: 'EchidnaScene', direction: 'up',
                         spawnX: 64 * 4 + 32, spawnY: 64 * 6 + 32
                     });
                 }
@@ -72,12 +71,17 @@ export default class ForestEndScene extends BaseScene {
                     this.add.image(posX, posY, 'forest', 0).setOrigin(0);
                     // --- 3. LAYER THREE: TOP OBJECTS ---
                     if (tileIndex === fenceIndex) {
-                        const fence = this.add.image(posX, posY, 'fences', 6).setOrigin(0);
                         // Check for the gate position (Row 1, Column 4)
                         if (y === 1 && x === 4) {
-                            this.gateTile = fence;
+                            if (GameState.triviaStatus !== 'COMPLETED') {
+                                const fence = this.add.image(posX, posY, 'fences', 6).setOrigin(0);
+                                this.gateTile = fence;
+                                this.walls.push({ x: posX + 32, y: posY + 32 });
+                            }
+                        } else {
+                            const fence = this.add.image(posX, posY, 'fences', 6).setOrigin(0);
+                            // this.walls.push({ x: posX + 32, y: posY + 32 });
                         }
-                        this.walls.push({ x: posX + 32, y: posY + 32 });
                     }
                     else if (tileIndex === treeIndex) {
                         this.add.image(posX, posY, 'forest2', tileIndex).setOrigin(0);
@@ -119,23 +123,22 @@ export default class ForestEndScene extends BaseScene {
             lines = [
                 "Hello Bubu! My name is Andy.",
                 "If you want to pick flowers on my farm, you'll have to answer some trivia questions.",
-                "Get 5 questions in a row correct and I'll let you through."
+                "Get 10 questions in a row correct and I'll let you through."
             ];
             onCompleteAction = () => { GameState.triviaStatus = 'ACTIVE'; };
 
         } else if (GameState.triviaStatus === 'ACTIVE') {
-            const randomIdx = Phaser.Math.Between(0, GameState.triviaQuestions.length - 1);
-            const questionData = GameState.triviaQuestions[randomIdx];
+            const questionData = GameState.triviaQuestions[GameState.triviaStreak];
 
             // Shorten the prompt since the question appears with the buttons
-            lines = [`Question ${GameState.triviaStreak + 1}/5 incoming...`];
+            lines = [`Question ${GameState.triviaStreak + 1}/10 incoming...`];
 
             onCompleteAction = () => {
                 this.showTriviaChoices(questionData);
             };
 
         } else if (GameState.triviaStatus === 'COMPLETED') {
-            lines = ["You've already proven your flower-knowledge, Bubu!", "Go ahead and pick some flowers!"];
+            lines = ["You've proven your Knowledge Bubu.", "Go ahead and pick some flowers!"];
         }
 
         // Launch the dialogue exactly like you did with Dudu
@@ -225,12 +228,12 @@ export default class ForestEndScene extends BaseScene {
 
         if (isCorrect) {
             GameState.triviaStreak++;
-            if (GameState.triviaStreak >= 5) {
+            if (GameState.triviaStreak >= 10) {
                 GameState.triviaStatus = 'COMPLETED';
-                lines = ["Amazing! You got 5 in a row!", "The farm gate is now open for you!"];
+                lines = ["Amazing! You got 10 in a row!", "The farm gate is now open for you!"];
                 onComplete = () => { this.openGate(); };
             } else {
-                lines = [`Correct! Just ${5 - GameState.triviaStreak} more to go.`];
+                lines = [`Correct! Just ${10 - GameState.triviaStreak} more to go.`];
                 // FIX: This triggers the next question
                 onComplete = () => { this.handleAndyInteraction(); };
             }
