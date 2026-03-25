@@ -22,6 +22,6 @@ export const GameState = {
         "Yellow Flower": "A bright yellow daisy. It smells like sunshine.",
         "Blue Flower": "A cool blue petal. It feels slightly damp to the touch.",
         "Pink Flower": "A vibrant pink blossom. It looks very delicate.",
-        "Birthday Present": "Go to this link: v1ta1287.github.io/BubuRPG/"
+        "Birthday Present": "Go to this link: v1ta1287.github.io/BubuCalendar/"
     }
 };
